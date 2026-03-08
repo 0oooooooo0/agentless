@@ -1,6 +1,8 @@
-# agentless
+<p align="center">
+  <img src="assets/logo.png" alt="agentless" width="600">
+</p>
 
-Auto-discovery plugin for Claude Code specialist modes — automatically recommends and installs AI expert personas based on your project's needs.
+<p align="center">Auto-discovery plugin for Claude Code specialist modes — automatically recommends and installs AI expert personas based on your project's needs.
 
 Powered by [agency-agents](https://github.com/msitarzewski/agency-agents) (60+ specialist modes across 9 divisions).
 

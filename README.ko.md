@@ -1,6 +1,8 @@
-# agentless
+<p align="center">
+  <img src="assets/logo.png" alt="agentless" width="600">
+</p>
 
-Claude Code 전문가 모드 자동 추천 플러그인 — 프로젝트를 분석해서 필요한 AI 전문가 페르소나를 자동으로 추천하고 설치합니다.
+<p align="center">Claude Code 전문가 모드 자동 추천 플러그인 — 프로젝트를 분석해서 필요한 AI 전문가 페르소나를 자동으로 추천하고 설치합니다.
 
 [agency-agents](https://github.com/msitarzewski/agency-agents) 기반 (9개 부문, 60개 이상의 전문가 모드).
 
