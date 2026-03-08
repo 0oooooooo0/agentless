@@ -1,0 +1,30 @@
+{
+  "name": "agentless",
+  "version": "0.1.0",
+  "description": "Auto-discovery plugin for Claude Code — automatically recommends and installs AI specialist modes based on your project's needs",
+  "author": "0oooooooo0",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "agentless": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    ".claude-plugin/",
+    "skills/",
+    "commands/"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "agents",
+    "persona",
+    "plugin",
+    "auto-discovery",
+    "ai"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0oooooooo0/agentless.git"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "agentless",
+  "description": "Auto-discovery plugin for Claude Code specialist modes — automatically recommends and installs AI expert personas based on your project's needs",
+  "version": "0.1.0",
+  "author": "0oooooooo0"
+}
