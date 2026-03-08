@@ -1,78 +1,149 @@
-<p align="center">
-  <img src="assets/logo.png" alt="agentless" width="600">
-</p>
+<div align="center">
 
-<p align="center">Auto-discovery plugin for Claude Code specialist modes — automatically recommends and installs AI expert personas based on your project's needs.
+<img src="./assets/logo.png" alt="agentless" width="600" />
 
-Powered by [agency-agents](https://github.com/msitarzewski/agency-agents) (60+ specialist modes across 9 divisions).
+**You don't need to know what agents are.**
 
-## What is this?
+A Claude Code plugin that automatically discovers and recommends specialist modes — AI expert personas tailored to your project.
 
-**agentless** analyzes your project's tech stack and automatically recommends relevant specialist modes (AI personas with deep domain expertise). Think of it as "the right expert for the job" — without you needing to know what's available.
+[한국어](./README.ko.md) · [Getting Started](#getting-started) · [How It Works](#how-it-works)
 
-- **Skills** tell Claude *how to do things* (procedures)
-- **Specialist modes** tell Claude *who to be* (personas with domain expertise)
+</div>
 
-## Install
+---
+
+## The Problem
+
+There are **60+ AI agent personas** available in [agency-agents](https://github.com/msitarzewski/agency-agents) — covering frontend, backend, DevOps, testing, design, marketing, and more. But there's a catch: you have to *know* they exist to use them.
+
+Most users never find the right persona because nobody told them it was there.
+
+## The Solution
+
+**agentless** removes the knowledge barrier entirely.
+
+- **Project scanning** — `/agents` analyzes your tech stack and recommends the right specialist modes automatically.
+- **Keyword search** — `/agents react` or `/agents marketing` searches across all 60+ modes.
+- **Automatic recommendations** — Working with Docker? A DevOps specialist mode gets suggested. No commands needed.
+- **Zero jargon** — The plugin never says "agent" or "persona" to users. It talks about "specialist modes" and "expert support" instead.
+
+## Getting Started
+
+### Installation
+
+One command:
 
 ```bash
 npx agentless
 ```
 
-This installs the plugin to `~/.claude/plugins/agentless/` and registers it with Claude Code.
+That's it. The plugin is installed to `~/.claude/plugins/agentless`.
 
-## Usage
+<details>
+<summary>Alternative: manual installation</summary>
 
-### `/agents` — Auto-recommend or search
+```bash
+git clone https://github.com/0oooooooo0/agentless.git
+cd agentless && node bin/cli.mjs
+```
 
-Without arguments, scans your project and recommends specialist modes:
+</details>
+
+### Usage
+
+#### `/agents` — Scan and recommend
+
+The main command. Without arguments, it scans your project and recommends specialist modes:
 
 ```
 /agents
 ```
 
-With a keyword, searches for specific specialist modes:
+What happens:
+1. Scans `package.json`, `go.mod`, `pyproject.toml`, and other project files
+2. Detects your tech stack (React, TypeScript, Docker, etc.)
+3. Fetches the latest agents from GitHub
+4. Scores and ranks the best matches
+5. Shows recommendations and lets you pick what to install
+
+```
+Detected: React 19, Next.js, Tailwind CSS, Jest
+
+Recommended:
+| # | Name                | Division    | Score | Description                    |
+|---|---------------------|-------------|-------|--------------------------------|
+| 1 | Frontend Developer  | engineering | 9     | React, Vue, Angular specialist |
+| 2 | Evidence Collector  | testing     | 4     | Screenshot-based QA testing    |
+| 3 | UI Designer         | design      | 3     | Design systems & components    |
+
+Select to install (1,2,3 / skip):
+```
+
+#### `/agents <keyword>` — Search by role or technology
 
 ```
 /agents react
-/agents security
+/agents marketing
 /agents devops
+/agents ux
 ```
 
-Example output:
+This searches the [agency-agents](https://github.com/msitarzewski/agency-agents) repository in real-time and shows matching results.
+
+#### Just work normally
+
+You don't have to do anything special. When you're working with a specific framework or tool, **agentless** will suggest relevant specialist modes naturally:
+
+> By the way, I found a **Frontend specialist mode** that can help with React component architecture, performance optimization, and accessibility.
+> Would you like me to set it up?
+
+## How It Works
+
+**agentless** fetches agents from GitHub in real-time — no local catalog, always up to date:
+
 ```
-Detected: React 19, Next.js, Tailwind CSS, Jest
-Recommended:
-  1. Frontend Developer (engineering) — Score: 9
-  2. Evidence Collector (testing) — Score: 4
-  3. UI Designer (design) — Score: 3
+┌───────────────────────────────────────────┐
+│             /agents [query]               │
+│           or auto-discovery               │
+└───────────────────┬───────────────────────┘
+                    │
+       ┌────────────┼────────────┐
+       ▼            ▼            ▼
+  ┌─────────┐ ┌──────────┐ ┌────────┐
+  │  Local   │ │  agency  │ │ GitHub │
+  │ .claude/ │ │ -agents  │ │ Search │
+  │ agents/  │ │  (Live)  │ │(fallback)│
+  └─────────┘ └──────────┘ └────────┘
+       │            │            │
+       └────────────┴────────────┘
+                    │
+                    ▼
+             Unified Results
+                    │
+                    ▼
+             agent-installer
+        (confirm → install → verify)
 ```
 
-### Other commands
+1. **Local** — Checks `.claude/agents/*.md` and `~/.claude/agents/*.md` for already-installed modes
+2. **[agency-agents](https://github.com/msitarzewski/agency-agents)** — Fetches the latest agent roster from GitHub (60+ agents, 9 divisions)
+3. **GitHub search** — Falls back to web search when other sources return few results
 
-```bash
-npx agentless status     # Check installation status
-npx agentless uninstall  # Remove the plugin
-```
+### Installation flow
 
-## How it works
+| Source | How it installs |
+|--------|----------------|
+| Already installed | Tells you it's ready to use |
+| agency-agents | Downloads `.md` from GitHub raw URL |
+| Other GitHub | Downloads the raw file directly |
 
-1. **Project scanning** — Reads `package.json`, `go.mod`, `pyproject.toml`, etc. to build a tech profile
-2. **Live GitHub fetch** — Fetches the latest agents from [agency-agents](https://github.com/msitarzewski/agency-agents) every time — always up to date
-3. **Smart matching** — Scores agents by tech stack match (+3), language match (+2), keyword match (+1)
-4. **One-click install** — Downloads the agent persona and adds it to your project
+Every installation requires **explicit user confirmation**. Nothing gets installed silently.
 
-## Agent install locations
+Installed agents are saved to `.claude/agents/` and included in `CLAUDE.md` via `@agents/<name>.md`.
 
-- **Project local** (default): `.claude/agents/<agent-name>.md`
-- **Global**: `~/.claude/agents/<agent-name>.md`
-- Automatically adds `@agents/<agent-name>.md` include to `CLAUDE.md`
+## What can you find?
 
-## What can you search for?
-
-### Code-related (auto-detected by `/agents`)
-
-These are automatically recommended when you run `/agents` with no arguments — the plugin scans your project files and matches:
+### Auto-detected (by project scan)
 
 | Your project has... | Recommended mode |
 |---|---|
@@ -84,25 +155,21 @@ These are automatically recommended when you run `/agents` with no arguments —
 | Jest, Pytest, Playwright | Evidence Collector |
 | OWASP, OAuth, auth libraries | Security Engineer |
 | Small/new project, few files | Rapid Prototyper |
-| Laravel, PHP, Livewire | Senior Developer |
 | CSS frameworks, design tokens | UI Designer |
-| WCAG, ARIA, accessibility configs | Accessibility Auditor |
 
-### Role-related (search with `/agents <keyword>`)
-
-These aren't tied to code files — search by role or task:
+### Searchable by keyword
 
 ```
-/agents marketing        → Content Creator, Growth Hacker, Social Media Strategist, ...
-/agents product          → Sprint Prioritizer, Trend Researcher, Feedback Synthesizer
-/agents project          → Senior PM, Studio Producer, Project Shepherd, ...
-/agents data             → Data Analytics Reporter, Data Consolidation Agent
-/agents legal            → Legal Compliance Checker
-/agents finance          → Finance Tracker
-/agents support          → Support Responder, Executive Summary Generator
-/agents vr               → XR Immersive Developer, visionOS Spatial Engineer, ...
-/agents brand            → Brand Guardian, Visual Storyteller
-/agents ux               → UX Architect, UX Researcher
+/agents marketing    → Content Creator, Growth Hacker, Social Media Strategist, ...
+/agents product      → Sprint Prioritizer, Trend Researcher, Feedback Synthesizer
+/agents project      → Senior PM, Studio Producer, Project Shepherd, ...
+/agents data         → Data Analytics Reporter, Data Consolidation Agent
+/agents legal        → Legal Compliance Checker
+/agents finance      → Finance Tracker
+/agents support      → Support Responder, Executive Summary Generator
+/agents vr           → XR Immersive Developer, visionOS Spatial Engineer, ...
+/agents brand        → Brand Guardian, Visual Storyteller
+/agents ux           → UX Architect, UX Researcher
 ```
 
 ### All 9 divisions
@@ -119,6 +186,37 @@ These aren't tied to code files — search by role or task:
 | Spatial Computing | 6 | XR, visionOS, Metal, WebXR |
 | Specialized | 7 | Orchestration, Data, LSP, Reports |
 
+## Project Structure
+
+```
+agentless/
+├── .claude-plugin/
+│   └── plugin.json              # Plugin manifest
+├── bin/
+│   └── cli.mjs                  # npx agentless CLI
+├── skills/
+│   ├── auto-agent-discovery/
+│   │   └── SKILL.md             # Background auto-recommendation
+│   └── agent-installer/
+│       └── SKILL.md             # Installation handler
+└── commands/
+    └── agents.md                # /agents — scan + search + install
+```
+
+## Contributing
+
+Issues and PRs welcome at [github.com/0oooooooo0/agentless](https://github.com/0oooooooo0/agentless).
+
 ## License
 
 MIT
+
+---
+
+<div align="center">
+
+Built by [@0oooooooo0](https://github.com/0oooooooo0)
+
+*The best expert is the one you don't have to look for.*
+
+</div>
