@@ -126,9 +126,10 @@ function uninstall() {
     return;
   }
 
-  const commandsSrc = join(ROOT, "commands");
-  if (existsSync(commandsSrc)) {
-    for (const file of readdirSync(commandsSrc)) {
+  // Read from installed TARGET, not ROOT (ROOT may be a temp npx cache)
+  const installedCommands = join(TARGET, "commands");
+  if (existsSync(installedCommands)) {
+    for (const file of readdirSync(installedCommands)) {
       const cmdPath = join(COMMANDS_DIR, file);
       if (existsSync(cmdPath)) {
         rmSync(cmdPath);
