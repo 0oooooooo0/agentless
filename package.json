@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "agentless": "./bin/cli.mjs"
+    "agntless": "./bin/cli.mjs"
   },
   "files": [
     "bin/",
