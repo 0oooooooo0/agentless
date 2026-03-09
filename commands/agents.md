@@ -138,13 +138,23 @@ Present the results:
 >
 > 설치할 번호를 선택하세요 (여러 개: 1,2,3 / 건너뛰기: skip)
 
-For Mode B, omit the "감지된 기술" line and replace "Score" with "Relevance".
+**Mode A only — always append the category guide after the recommendation table:**
+
+> 다른 분야의 전문가 모드도 검색할 수 있습니다:
+> `/agents marketing` · `/agents product` · `/agents design` · `/agents project` · `/agents support` · `/agents data` · `/agents testing` · `/agents spatial`
+
+This MUST always be shown in Mode A, even when there are scored recommendations. It helps users discover the 49+ non-code specialist modes that can't be detected by project scanning.
+
+For Mode B, omit the "감지된 기술" line and replace "Score" with "Relevance". Do NOT append the category guide.
 
 If no results:
 > "검색 결과가 없습니다. 다른 키워드로 시도해 보세요."
 
 If all technologies already covered:
 > 필요한 전문가 모드가 모두 설치되어 있습니다.
+>
+> 다른 분야의 전문가 모드도 검색할 수 있습니다:
+> `/agents marketing` · `/agents product` · `/agents design` · `/agents project` · `/agents support` · `/agents data` · `/agents testing` · `/agents spatial`
 
 ## Step: Install (shared)
 
