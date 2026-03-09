@@ -35,7 +35,7 @@
 한 줄이면 됩니다:
 
 ```bash
-npx agentless
+npx agntless
 ```
 
 끝. `~/.claude/plugins/agentless`에 설치됩니다.
@@ -194,7 +194,7 @@ agentless/
 ├── .claude-plugin/
 │   └── plugin.json              # 플러그인 매니페스트
 ├── bin/
-│   └── cli.mjs                  # npx agentless CLI
+│   └── cli.mjs                  # npx agntless CLI
 ├── skills/
 │   ├── auto-agent-discovery/
 │   │   └── SKILL.md             # 백그라운드 자동 추천

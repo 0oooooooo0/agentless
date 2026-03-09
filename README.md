@@ -34,7 +34,7 @@ Most users never find the right persona because nobody told them it was there.
 One command:
 
 ```bash
-npx agentless
+npx agntless
 ```
 
 That's it. The plugin is installed to `~/.claude/plugins/agentless`.
@@ -193,7 +193,7 @@ agentless/
 ├── .claude-plugin/
 │   └── plugin.json              # Plugin manifest
 ├── bin/
-│   └── cli.mjs                  # npx agentless CLI
+│   └── cli.mjs                  # npx agntless CLI
 ├── skills/
 │   ├── auto-agent-discovery/
 │   │   └── SKILL.md             # Background auto-recommendation

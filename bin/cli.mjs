@@ -56,10 +56,10 @@ function printHelp() {
   agentless - Auto-discovery plugin for Claude Code specialist modes
 
   Usage:
-    npx agentless            Install (or update) the plugin
-    npx agentless uninstall  Remove the plugin
-    npx agentless status     Check installation status
-    npx agentless help       Show this message
+    npx agntless            Install (or update) the plugin
+    npx agntless uninstall  Remove the plugin
+    npx agntless status     Check installation status
+    npx agntless help       Show this message
 
   Specialist modes are fetched from GitHub in real-time.
   No local catalog — always up to date.
